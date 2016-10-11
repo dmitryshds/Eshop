@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+
+    
+    <welcome-file-list>
+        <welcome-file>index</welcome-file>
+    </welcome-file-list>
+
+    <resource-ref>
+        <description>DB Connection</description>
+        <res-ref-name>jdbc/shop</res-ref-name>
+        <res-type>javax.sql.DataSource</res-type>
+        <res-auth>Container</res-auth>
+    </resource-ref>
+
+
+    <servlet>
+        <servlet-name>EshopServlet</servlet-name>
+        <servlet-class>biz.bagira.shds.eshop.controller.EshopServlet</servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>EshopServlet</servlet-name>
+        <url-pattern>/index</url-pattern>
+        <url-pattern>/pages/product</url-pattern>
+    </servlet-mapping>
+
+     <servlet>
+         <servlet-name>ImageServlet</servlet-name>
+         <servlet-class>biz.bagira.shds.eshop.controller.ImageServlet</servlet-class>
+     </servlet>
+
+    <servlet-mapping>
+        <servlet-name>ImageServlet</servlet-name>
+        <url-pattern>/image</url-pattern>
+    </servlet-mapping>
+</web-app>
