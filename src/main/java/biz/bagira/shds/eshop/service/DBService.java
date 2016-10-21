@@ -24,7 +24,7 @@ import java.util.Properties;
         loadProperties();
     }
 
-//    //TODO for test only
+    //TODO for test only
 //    public Connection getConnection() {
 //
 //        Connection connection = null;
@@ -40,6 +40,8 @@ import java.util.Properties;
 //        }
 //        return connection;
 //    }
+
+
  public Connection getConnection() {
         Connection connection = null;
         try {

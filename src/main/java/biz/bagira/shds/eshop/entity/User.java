@@ -1,5 +1,6 @@
 package biz.bagira.shds.eshop.entity;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +14,7 @@ public class User extends AbstractEntity{
     private String email;
     private String address;
     private String phoneNumber;
+    private Date dateRegistration;
     private List<Integer> productIdList;
 
 
@@ -58,5 +60,33 @@ public class User extends AbstractEntity{
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+    public Date getDateRegistration() {
+        return dateRegistration;
+    }
+
+    public void setDateRegistration(Date dateRegistration) {
+        this.dateRegistration = dateRegistration;
+    }
+
+    public List<Integer> getProductIdList() {
+        return productIdList;
+    }
+
+    public void setProductIdList(List<Integer> productIdList) {
+        this.productIdList = productIdList;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "name='" + name + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", address='" + address + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", dateRegistration=" + dateRegistration +
+                ", productIdList=" + productIdList +
+                '}';
     }
 }

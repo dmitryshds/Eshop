@@ -13,7 +13,7 @@
 </head>
 <body>
 <jsp:include page="header.jsp"/>
-
+<%--<%@ include file="header.jsp" %>--%>
 <h2>Categories:</h2>
 <c:forEach items="${categories}" var="category">
     <h3><a href="/index?category=${category.type}"/>${category.type}</h3>

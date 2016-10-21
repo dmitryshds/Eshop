@@ -28,38 +28,51 @@ public class EshopServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String category = request.getParameter("category");
-         logger.debug(">>>>>>>>>>Category = "+category);
-        if (category == null) {
-            List<Category> categories = categoryDAO.getAll();
-            List<Product> products = productDAO.getAll();
-            request.setAttribute("categories", categories);
-            request.setAttribute("products", products);
-            RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/pages/index.jsp");
-            requestDispatcher.forward(request, response);
-        }
-
-
-        if (category != null)
-        {
-            logger.debug("Servlet:   category  = "+category);
-            Integer idCategory = categoryDAO.getIdCategoryByType(category);
-            List<Product> productList = productDAO.getAllbyCategory(idCategory);
-            logger.debug("Servlet: allbyCategory = "+productList);
-            request.setAttribute("listproducts",productList);
-            RequestDispatcher requestDispatcher1 = getServletContext().getRequestDispatcher("/pages/product.jsp");
-            requestDispatcher1.forward(request,response);
-            logger.debug(">>>>>>>>>>>>>AFTER FORWARD");
-
-
-        }
-
-        logger.debug(">>>>>>>>>>>> END DOGET>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-
+       process(request,response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+             process(request,response);
+    }
+
+    private void process(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
+
+        String category = request.getParameter("category");
+
+//                User user = (User) request.getSession().getAttribute("user");
+//                logger.debug(">>>> USER = " + user);
+//                if (user == null)
+//                {
+//                    user = new User();
+//                    user.setName("Anonimous");
+//                    request.getSession().setAttribute("user",user);
+//                    logger.debug(">>>>USER<<<< = "+user);
+//                }
+
+                logger.debug(">>>>>>>>>>Category = " + category);
+                if (category == null) {
+                    List<Category> categories = categoryDAO.getAll();
+                    List<Product> products = productDAO.getAll();
+                    request.setAttribute("categories", categories);
+                    request.setAttribute("products", products);
+                    RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/pages/index.jsp");
+                    requestDispatcher.forward(request, response);
+                } else {
+                    logger.debug("Servlet:   category  = " + category);
+                    Integer idCategory = categoryDAO.getIdCategoryByType(category);
+                    List<Product> productList = productDAO.getAllbyCategory(idCategory);
+                    logger.debug("Servlet: allbyCategory = " + productList);
+                    request.setAttribute("listproducts", productList);
+                    RequestDispatcher requestDispatcher1 = getServletContext().getRequestDispatcher("/pages/product.jsp");
+                    requestDispatcher1.forward(request, response);
+                    logger.debug(">>>>>>>>>>>>>AFTER FORWARD");
+
+
+                }
+
+                logger.debug(">>>>>>>>>>>> END DOGET>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+
 
     }
 }
