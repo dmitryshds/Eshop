@@ -11,10 +11,12 @@
 <html>
 <head>
     <title>Login form</title>
+    <link type="text/css" rel="stylesheet" href="<c:url value="/css/global.css" />" />
 </head>
 <body>
-<jsp:include page="header.jsp"/>
-<table cellpadding=2 cellspacing=1 border=0>
+<c:import url="header.jsp"/>
+<table>
+<%--<table cellpadding=2 cellspacing=1 border=0>--%>
     <c:if test="${error ne null}">
         <span style="color: red; align-content: center">${error}</span>
     </c:if>
@@ -34,7 +36,6 @@
 
 </table>
 <a href="registration">Create new account</a>
-
-<jsp:include page="footer.jsp"/>
+<c:import url="footer.jsp"/>
 </body>
 </html>
