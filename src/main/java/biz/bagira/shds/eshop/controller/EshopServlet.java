@@ -40,17 +40,8 @@ public class EshopServlet extends HttpServlet {
 
         String category = request.getParameter("category");
 
-//                User user = (User) request.getSession().getAttribute("user");
-//                logger.debug(">>>> USER = " + user);
-//                if (user == null)
-//                {
-//                    user = new User();
-//                    user.setName("Anonimous");
-//                    request.getSession().setAttribute("user",user);
-//                    logger.debug(">>>>USER<<<< = "+user);
-//                }
 
-                logger.debug(">>>>>>>>>>Category = " + category);
+                logger.debug("Category = " + category);
                 if (category == null) {
                     List<Category> categories = categoryDAO.getAll();
                     List<Product> products = productDAO.getAll();
@@ -59,19 +50,15 @@ public class EshopServlet extends HttpServlet {
                     RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/pages/index.jsp");
                     requestDispatcher.forward(request, response);
                 } else {
-                    logger.debug("Servlet:   category  = " + category);
                     Integer idCategory = categoryDAO.getIdCategoryByType(category);
                     List<Product> productList = productDAO.getAllbyCategory(idCategory);
-                    logger.debug("Servlet: allbyCategory = " + productList);
                     request.setAttribute("listproducts", productList);
                     RequestDispatcher requestDispatcher1 = getServletContext().getRequestDispatcher("/pages/product.jsp");
                     requestDispatcher1.forward(request, response);
-                    logger.debug(">>>>>>>>>>>>>AFTER FORWARD");
 
 
                 }
 
-                logger.debug(">>>>>>>>>>>> END DOGET>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 
 
     }

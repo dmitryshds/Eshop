@@ -13,10 +13,6 @@ public class LogInFilter implements Filter {
 
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 
-//        HttpServletRequest httpRequest = (HttpServletRequest) request;
-//        HttpServletResponse httpResponse = (HttpServletResponse) response;
-//        HttpSession session = httpRequest.getSession();
-//        Object user = session.getAttribute("user");
 
     }
 

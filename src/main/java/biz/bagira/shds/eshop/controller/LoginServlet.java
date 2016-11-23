@@ -6,15 +6,14 @@ import biz.bagira.shds.eshop.entity.User;
 import biz.bagira.shds.eshop.service.PasswordService;
 import org.apache.log4j.Logger;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
-import java.util.Arrays;
+
+import static biz.bagira.shds.eshop.service.PasswordService.*;
 
 /**
  * Created by Dmitriy on 11.10.2016.
@@ -33,32 +32,23 @@ public class LoginServlet extends HttpServlet {
 
         if (isValidString(name) && isValidString(password)) {
             PasswordEntity passwordEntityFromDB = userDAO.getPasswordEntityFromDB(name);
-            logger.debug("passwordEntityFromDB = "+passwordEntityFromDB);
             if (passwordEntityFromDB == null) {
                 request.setAttribute("error", "Invalid User name or Password please try again or create new account");
                 getServletContext().getRequestDispatcher("/pages/login.jsp").forward(request, response);
             } else {
-
                 String checkedPass = passwordService.getSecurePassword(password, passwordEntityFromDB.getSalt());
-
                 boolean validatePassword = passwordService.validatePassword(checkedPass, passwordEntityFromDB.getPassword());
-                logger.debug(">>>>>>>>equals = " + validatePassword);
-                logger.debug("passwordEntityFromDBPassword = " + passwordEntityFromDB.getPassword());
                 logger.debug("checkedPass = " + checkedPass);
 
                 if (validatePassword) {
                     //log in
                     HttpSession session = request.getSession(true);
-
                     Integer userId = passwordEntityFromDB.getUserId();
-                    logger.debug("user Id from DB = "+userId);
                     User currentUser = userDAO.getById(userId);
                     session.setAttribute("user", currentUser);
-
-                    logger.debug(">>>>USER LOG IN<<<<   "+currentUser);
+                    logger.debug("USER LOG IN: " + currentUser);
                     Object categories = request.getAttribute("categories");
                     Object products = request.getAttribute("products");
-                    logger.debug("categories = " + categories + " " + "products = " + products);
                     response.sendRedirect("/");
                 }
             }
@@ -68,24 +58,27 @@ public class LoginServlet extends HttpServlet {
         }
 
 
-        logger.debug("<<<<<<< LoginServlet name = " + name + " Passw = " + password);
-
-
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        logger.debug(">>>>DO GET");
-        getServletContext().getRequestDispatcher("/pages/login.jsp").forward(request, response);
 
-    }
+        String logout = request.getParameter("logout");
+        logger.debug("Logout param :" + logout);
 
+        if (logout != null && logout.equals("true")) {
+            HttpSession session = request.getSession(false);
+            User user = (User) session.getAttribute("user");
+            session.removeAttribute("user");
+            user = (User) session.getAttribute("user");
+            response.sendRedirect("/");
+        }
+        else {
 
-    private boolean isValidString(String s) {
-        if (s == null) return false;
-        if (s.trim().isEmpty()) return false;
-        return true;
+            getServletContext().getRequestDispatcher("/pages/login.jsp").forward(request, response);
+        }
+
     }
 
 

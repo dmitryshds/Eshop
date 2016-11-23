@@ -105,7 +105,7 @@ public class ReviewDAO {
             connection = dbService.getConnection();
             String query = dbService.getQuery("delite.review");
             pstmt = connection.prepareStatement(query);
-            pstmt.setInt(1, idReview);  //
+            pstmt.setInt(1, idReview);
            return pstmt.execute();
 
 

@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+import static biz.bagira.shds.eshop.service.PasswordService.isValidString;
+
 /**
  * Created by Dmitriy on 13.10.2016.
  */
@@ -34,12 +36,6 @@ public class RegistrationServlet extends HttpServlet {
         String phone = request.getParameter("phone");
         String address = request.getParameter("address");
 
-        logger.debug("RegistrationServlet name = " + name);
-        logger.debug("RegistrationServlet email = " + email);
-        logger.debug("RegistrationServlet password = " + password);
-        logger.debug("RegistrationServlet confpass = " + confpass);
-        logger.debug("RegistrationServlet phone = " + phone);
-        logger.debug("RegistrationServlet address = " + address);
         if (isValidString(password) && isValidString(confpass)) {
             if (!password.equals(confpass)) {
                 request.setAttribute("error", "Password value and Confirm password value not equal");
@@ -57,11 +53,8 @@ public class RegistrationServlet extends HttpServlet {
             user.setAddress(address);
             User userFromDAO = userDAO.create(user);
             HttpSession session = request.getSession(false);
-           // session.removeAttribute("user");
             session.setAttribute("user", userFromDAO);
-            logger.debug("<<<>>>RegistrationServlet userSession" + user);
             getServletContext().getRequestDispatcher("/pages/login.jsp").forward(request, response);
-           // response.sendRedirect("index");
 
         } else {
             if (!isValidString(name)) {
@@ -85,10 +78,5 @@ public class RegistrationServlet extends HttpServlet {
     }
 
 
-    private boolean isValidString(String s) {
-        if (s == null) return false;
-        if (s.trim().isEmpty()) return false;
-        return true;
-    }
 
 }

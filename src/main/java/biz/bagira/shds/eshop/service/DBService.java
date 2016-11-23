@@ -15,9 +15,7 @@ import java.util.Properties;
  public class DBService {
 
     final static Logger logger = Logger.getLogger(DBService.class);
-
     Properties queriProperties;
-
 
     public DBService() {
         logger.debug("Constructor DBService() -- loadProperties()");
@@ -36,7 +34,7 @@ import java.util.Properties;
 //                                   "user=root&password=root");
 //
 //        } catch (Exception e) {
-//            e.printStackTrace();
+//             logger.debug(e.getMessage());
 //        }
 //        return connection;
 //    }
@@ -55,11 +53,6 @@ import java.util.Properties;
         return connection;
     }
 
-
-
-
-
-
     public String getQuery(String name) {
         logger.debug("Get query  " + name);
         if (queriProperties == null)
@@ -67,8 +60,6 @@ import java.util.Properties;
         String query = queriProperties.getProperty(name);
         logger.debug("query = " + query);
         return query;
-
-
     }
 
 
@@ -78,7 +69,7 @@ import java.util.Properties;
         try {
             queriProperties.load(getClass().getResourceAsStream("/queries.properties"));
         } catch (IOException e) {
-            e.printStackTrace();
+           logger.debug(e.getMessage());
         }
 
     }

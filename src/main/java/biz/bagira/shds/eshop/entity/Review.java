@@ -15,7 +15,6 @@ public class Review extends AbstractEntity{
 
     }
 
-
     public String getReview() {
         return review;
     }

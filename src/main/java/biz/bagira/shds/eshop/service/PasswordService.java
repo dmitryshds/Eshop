@@ -54,9 +54,30 @@ public class PasswordService {
 
 
 
-    public boolean validatePassword(String originalPass, String passFromDB) {
+    public  boolean validatePassword(String originalPass, String passFromDB) {
         return originalPass.equals(passFromDB);
     }
 
+    public static boolean isNumber(String str) {
+            if (str == null || str.isEmpty()) {
+                return false;
+            }
+            char[] chars = str.toCharArray();
+            for (char aChar : chars) {
+                if (aChar == '.') {
+                    continue;
+                }
+                if (!Character.isDigit(aChar)) {
+                    return false;
+                }
+            }
+            return true;
+    }
+
+    public static boolean isValidString(String s) {
+           if (s == null) return false;
+           if (s.trim().isEmpty()) return false;
+           return true;
+       }
 
 }

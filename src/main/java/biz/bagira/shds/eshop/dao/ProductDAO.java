@@ -2,6 +2,7 @@ package biz.bagira.shds.eshop.dao;
 
 import biz.bagira.shds.eshop.entity.Category;
 import biz.bagira.shds.eshop.entity.Product;
+import biz.bagira.shds.eshop.entity.Review;
 import org.apache.log4j.Logger;
 
 import java.sql.Connection;
@@ -18,6 +19,7 @@ public class ProductDAO extends AbstractDAOImpl<Product> {
 
     final static Logger logger = Logger.getLogger(ProductDAO.class);
     CategoryDAO categoryDAO = new CategoryDAO();
+    ReviewDAO reviewDAO = new ReviewDAO();
 
 
     public List<Product> getAllbyCategory(Integer idCategory) {
@@ -34,6 +36,13 @@ public class ProductDAO extends AbstractDAOImpl<Product> {
             while (resultSet.next()) {
                 list.add(getEntity(resultSet));
             }
+            for (Product product : list) {
+                Integer productId = product.getId();
+                List<Review> allReviewByIdProduct = reviewDAO.getAllReviewByIdProduct(productId);
+                product.setReviewList(allReviewByIdProduct);
+
+            }
+
         } catch (SQLException e) {
             logger.debug(e.getMessage());
         } finally {
@@ -85,8 +94,8 @@ public class ProductDAO extends AbstractDAOImpl<Product> {
     public Product getEntity(ResultSet resultSet) {
         Product product = new Product();
         try {
-
-            product.setId(resultSet.getInt("idProduct"));
+            int idProduct = resultSet.getInt("idProduct");
+            product.setId(idProduct);
             int category = resultSet.getInt("category");
             Category byId = categoryDAO.getById(category);
             product.setCategory(byId);
@@ -95,6 +104,8 @@ public class ProductDAO extends AbstractDAOImpl<Product> {
             product.setPrice(resultSet.getBigDecimal("price"));
             product.setSum(resultSet.getInt("sum"));
             product.setPicture(resultSet.getBytes("picture"));
+            List<Review> allReviewByIdProduct = reviewDAO.getAllReviewByIdProduct(idProduct);
+            product.setReviewList(allReviewByIdProduct);
         } catch (SQLException e) {
             logger.debug(e.getMessage());
         }

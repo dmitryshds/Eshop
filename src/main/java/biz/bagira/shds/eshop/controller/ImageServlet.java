@@ -21,16 +21,11 @@ public class ImageServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         String id = request.getParameter("id");
-           logger.debug(">>>>>>>>>>>>ImageServlet id = " + id);
+           logger.debug("ImageServlet id = " + id);
         if (id != null) {
             Product product = productDAO.getById(Integer.parseInt(id));
-
-
             response.setContentType("image/jpg");
-
-
             response.getOutputStream().write(product.getPicture());
-            logger.debug(">>>>>>>>>>>>>>ImageServlet  end doGet");
         }
     }
 }

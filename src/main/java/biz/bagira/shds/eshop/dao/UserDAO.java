@@ -6,7 +6,6 @@ import biz.bagira.shds.eshop.service.PasswordService;
 import org.apache.log4j.Logger;
 
 import java.sql.*;
-import java.util.Arrays;
 
 /**
  * Created by Dmitriy on 11.10.2016.
@@ -22,8 +21,6 @@ public class UserDAO extends AbstractDAOImpl<User> {
             String password = entity.getPassword();
             byte[] salt = passwordService.getSalt();
             String securePassword = passwordService.getSecurePassword(password, salt);
-            logger.debug(">>>>>>securePassword = " + securePassword);
-            logger.debug(">>>>>>salt = " + Arrays.toString(salt));
             pstmt.setString(2, securePassword);
             pstmt.setBytes(3, salt);
             pstmt.setString(4, entity.getEmail());

@@ -73,14 +73,22 @@ public class User extends AbstractEntity{
         return productIdList;
     }
 
-    public void setProductIdList(List<Integer> productIdList) {
-        this.productIdList = productIdList;
+    public boolean addIdProductToList(Integer productId) {
+
+        List<Integer> productIdList = getProductIdList();
+         if (!productIdList.contains(productId)) {
+             productIdList.add(productId);
+             return true;
+         } else {return false;}
     }
+
 
     @Override
     public String toString() {
         return "User{" +
-                "name='" + name + '\'' +
+                "id="+
+                id+ '\''+
+                ", name='" + name + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
                 ", address='" + address + '\'' +

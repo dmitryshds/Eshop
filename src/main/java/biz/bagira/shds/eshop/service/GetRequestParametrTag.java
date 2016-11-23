@@ -15,7 +15,6 @@ public class GetRequestParametrTag extends TagSupport {
     @Override
     public int doStartTag() throws JspException {
 
-
         ServletRequest request = pageContext.getRequest();
         String parameter = request.getParameter(property);
         try {
